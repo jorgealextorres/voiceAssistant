@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <RadioButton
+            android:id="@+id/radioButtonWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="weatherClick"
+            android:text="Weather"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="127dp"
+            tools:layout_editor_absoluteY="185dp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="calendarClick"
+            android:text="Calendar"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="115dp"
+            tools:layout_editor_absoluteY="187dp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="locationClick"
+            android:text="Location"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="115dp"
+            tools:layout_editor_absoluteY="261dp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="toDoClick"
+            android:text="To-do"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="115dp"
+            tools:layout_editor_absoluteY="318dp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="48dp"
+        android:text="Select an activity:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
+        android:layout_marginEnd="2dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="31dp"
+        android:text="Button"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText" />
+
+
+</android.support.constraint.ConstraintLayout>
