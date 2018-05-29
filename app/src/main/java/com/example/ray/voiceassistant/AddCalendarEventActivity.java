@@ -129,6 +129,8 @@ public class AddCalendarEventActivity extends Activity {
             long eventId = new Long(uriInsertEvent.getLastPathSegment());
 
             System.out.println("new eventId : " + eventId);
+
+            finish();
         } catch (ParseException e) {
             e.printStackTrace();
         }
