@@ -8,14 +8,25 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="61dp"
         android:layout_marginTop="58dp"
         android:text="Location"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCurrentLocation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewCurrentLocation"
+        android:layout_width="210dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="278dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
 </android.support.constraint.ConstraintLayout>

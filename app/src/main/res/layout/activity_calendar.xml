@@ -11,53 +11,25 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
         android:text="Calendar"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="34dp"
-        android:text="Event"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textViewCalendarName"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/listViewEventos"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+        tools:layout_editor_absoluteX="133dp"
+        tools:layout_editor_absoluteY="31dp" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_marginEnd="16dp"
         android:onClick="clickAddEvent"
         android:text="Add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        tools:layout_editor_absoluteX="270dp"
+        tools:layout_editor_absoluteY="72dp" />
 
     <ListView
         android:id="@+id/listViewEventos"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="37dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="37dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        android:layout_width="244dp"
+        android:layout_height="347dp"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="138dp" />
 
 </android.support.constraint.ConstraintLayout>

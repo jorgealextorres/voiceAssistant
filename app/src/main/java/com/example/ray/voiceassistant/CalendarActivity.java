@@ -26,25 +26,15 @@ import java.util.Date;
 public class CalendarActivity extends Activity {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 100;
-    private static final int CALENDAR_ID = 3;
+    private static final int CALENDAR_ID = 3; // TODO : cambiar a 1 porque el 3 nos va bien a nosotros específicamente
 
     public static final String[] EVENT_PROJECTION = new String[]{
-            /*CalendarContract.Calendars._ID,
-            CalendarContract.Calendars.ACCOUNT_NAME,
-            CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
-            CalendarContract.Calendars.OWNER_ACCOUNT,*/
             CalendarContract.Events.CALENDAR_ID,
             CalendarContract.Events.TITLE,
             CalendarContract.Events.DTSTART,
             CalendarContract.Events.DTEND
     };
 
-    /*
-    private static final int PROJECTION_ID_INDEX = 0;
-    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-    private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-    private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
-    */
 
     private TextView textViewCalendarName;
     private ListView listViewEventos;
@@ -54,7 +44,7 @@ public class CalendarActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        textViewCalendarName = (TextView) findViewById(R.id.textViewCalendarName);
+        //textViewCalendarName = (TextView) findViewById(R.id.textViewCalendarName);
         listViewEventos = (ListView) findViewById(R.id.listViewEventos);
 
         consultaCalendars();
@@ -63,14 +53,12 @@ public class CalendarActivity extends Activity {
     private void consultaCalendars() {
         Cursor cur = null;
         ContentResolver cr = getContentResolver();
-        //Uri uri = CalendarContract.Calendars.CONTENT_URI;
+
         Uri uri = CalendarContract.Events.CONTENT_URI;
         String selection = "(" + CalendarContract.Events.CALENDAR_ID + "= ?)";
-        /*String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + "= ?) AND (" +
-                CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND (" +
-                CalendarContract.Calendars.OWNER_ACCOUNT + " = ? ))";*/
+
         String[] selectionArgs = new String[]{String.valueOf(CALENDAR_ID)};
-        //String[] selectionArgs = new String[]{"jorgealextorres@gmail.com", "com.google", "jorgealextorres@gmail.com"};
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -102,32 +90,10 @@ public class CalendarActivity extends Activity {
 
 
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
-        //cur = cr.query(uri, projection, selection, selectionArgs, null);
 
         ArrayList eventos = new ArrayList<String>();
 
         while(cur.moveToNext()){
-
-            /*
-            long calId = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
-
-
-            calId = cur.getLong(PROJECTION_ID_INDEX);
-            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);*/
-
-
-            //String title = null;
-
-            //title = cur.getString(1);
-
-            // QUE se hace con toda esta info??????
-
-            //textViewCalendarName.setText(title);
 
             Date start = new Date(Long.valueOf(cur.getString(2)));
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -136,7 +102,6 @@ public class CalendarActivity extends Activity {
 
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, eventos);
         listViewEventos.setAdapter(arrayAdapter);
-
 
     }
 

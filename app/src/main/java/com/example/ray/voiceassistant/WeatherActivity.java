@@ -97,7 +97,6 @@ public class WeatherActivity extends Activity {
                 temperaturaMin.setText("min : " + data.getJSONArray("list").getJSONObject(0).getJSONObject("main").getString("temp_min") + " C");
 
 
-                //icon.setImageURI(Uri.parse("http://openweathermap.org/img/w/" + data.getJSONArray("weather").getJSONObject(0).getString("icon") + ".png"));
 
 
                 String urlIconUriString = "http://openweathermap.org/img/w/" + data.getJSONArray("list").getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("icon") + ".png";
@@ -129,40 +128,5 @@ public class WeatherActivity extends Activity {
         }
 
     }
-/*
-    public byte[] getImage(String code) {
-        HttpURLConnection con = null ;
-        InputStream is = null;
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
 
-            con = (HttpURLConnection) ( new URL(IMG_URL + code + ".png")).openConnection();
-            con.setRequestMethod("GET");
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            con.connect();
-
-            // Let's read the response
-            is = con.getInputStream();
-            byte[] buffer = new byte[1024];
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            while ( is.read(buffer) != -1)
-                baos.write(buffer);
-
-            return baos.toByteArray();
-        }
-        catch(Throwable t) {
-            t.printStackTrace();
-        }
-        finally {
-            try { is.close(); } catch(Throwable t) {}
-            try { con.disconnect(); } catch(Throwable t) {}
-        }
-
-        return null;
-
-    }
-    */
 }
