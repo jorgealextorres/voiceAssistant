@@ -26,9 +26,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 
+import common.WeatherService;
+
 public class WeatherActivity extends Activity {
 
-    private static final String OPEN_WEATHER_MAP_API_CALL = "http://api.openweathermap.org/data/2.5/forecast?q=%s&units=metric%s%s&cnt=2";
+    //private static final String OPEN_WEATHER_MAP_API_CALL = "http://api.openweathermap.org/data/2.5/forecast?q=%s&units=metric%s%s&cnt=2";
     private static String IMG_URL = "http://openweathermap.org/img/w/";
     private EditText text;
     private TextView labelCity;
@@ -66,66 +68,47 @@ public class WeatherActivity extends Activity {
     }
 
     public void goClick(View view) {
-        String urlWithApiKey = String.format(OPEN_WEATHER_MAP_API_CALL, text.getText(), "&appid=", "b3483beadbaac4f77a0e9d41105bab06");
 
+
+        JSONObject data = WeatherService.getWeatherForNDays(text.getText().toString(), 2);
+        String cityCountry = null;
         try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-            URL urlOpenWeatherMapAPI = new URL(urlWithApiKey);
-            HttpURLConnection connection = (HttpURLConnection) urlOpenWeatherMapAPI.openConnection();
-
-            if(connection.getResponseCode() == 200){
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-                StringBuffer json = new StringBuffer(2048);
-                String aux = "";
-                while ((aux = reader.readLine()) != null)
-                    json.append(aux).append("\n");
-
-                reader.close();
-
-                JSONObject data = new JSONObject(json.toString());
-
-                String cityCountry = data.getJSONObject("city").getString("name").toUpperCase(Locale.getDefault()) + ", " +
-                        data.getJSONObject("city").getString("country");
-
-                labelCity.setText(cityCountry);
-                temperatura.setText(data.getJSONArray("list").getJSONObject(0).getJSONObject("main").getString("temp") + " C");
-                temperaturaMax.setText("max : " + data.getJSONArray("list").getJSONObject(0).getJSONObject("main").getString("temp_max") + " C");
-                temperaturaMin.setText("min : " + data.getJSONArray("list").getJSONObject(0).getJSONObject("main").getString("temp_min") + " C");
 
 
+            cityCountry = data.getJSONObject("city").getString("name").toUpperCase(Locale.getDefault()) + ", " + data.getJSONObject("city").getString("country");
+
+            JSONObject dataToday = data.getJSONArray("list").getJSONObject(0);
+            labelCity.setText(cityCountry);
+            temperatura.setText(dataToday.getJSONObject("main").getString("temp") + " C");
+            temperaturaMax.setText("max : " + dataToday.getJSONObject("main").getString("temp_max") + " °C");
+            temperaturaMin.setText("min : " + dataToday.getJSONObject("main").getString("temp_min") + " °C");
+
+            String urlIconUriString = "http://openweathermap.org/img/w/" + dataToday.getJSONArray("weather").getJSONObject(0).getString("icon") + ".png";
+            URL url = new URL(urlIconUriString);
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            icon.setImageBitmap(bmp);
 
 
-                String urlIconUriString = "http://openweathermap.org/img/w/" + data.getJSONArray("list").getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("icon") + ".png";
-                URL url = new URL(urlIconUriString);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                icon.setImageBitmap(bmp);
+            // mañana
+            JSONObject dataTomorrow = data.getJSONArray("list").getJSONObject(1);
+            labelCity2.setText(cityCountry);
+            temperatura2.setText(dataTomorrow.getJSONObject("main").getString("temp") + " C");
+            temperaturaMax2.setText("max : " + dataTomorrow.getJSONObject("main").getString("temp_max") + " °C");
+            temperaturaMin2.setText("min : " + dataTomorrow.getJSONObject("main").getString("temp_min") + " °C");
 
 
-
-
-                // mañana
-                labelCity2.setText(cityCountry);
-                temperatura2.setText(data.getJSONArray("list").getJSONObject(1).getJSONObject("main").getString("temp") + " C");
-                temperaturaMax2.setText("max : " + data.getJSONArray("list").getJSONObject(1).getJSONObject("main").getString("temp_max") + " C");
-                temperaturaMin2.setText("min : " + data.getJSONArray("list").getJSONObject(1).getJSONObject("main").getString("temp_min") + " C");
-
-
-                String urlIconUriString2 = "http://openweathermap.org/img/w/" + data.getJSONArray("list").getJSONObject(1).getJSONArray("weather").getJSONObject(0).getString("icon") + ".png";
-                URL url2 = new URL(urlIconUriString2);
-                Bitmap bmp2 = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
-                icon2.setImageBitmap(bmp2);
-
-
-            } else{
-                labelCity.setText("Data not found");
-            }
-        } catch (Exception e) {
+            String urlIconUriString2 = "http://openweathermap.org/img/w/" + dataTomorrow.getJSONArray("weather").getJSONObject(0).getString("icon") + ".png";
+            URL url2 = new URL(urlIconUriString2);
+            Bitmap bmp2 = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
+            icon2.setImageBitmap(bmp2);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 

@@ -1,35 +1,24 @@
-package com.example.ray.voiceassistant;
+package common;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.sql.Timestamp;
+import com.google.android.gms.common.util.CollectionUtils;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Date;
 
-import common.CalendarService;
-import common.Config;
-
-public class CalendarActivity extends Activity {
-
-    /*
+public class CalendarService {
     private static final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 100;
     private static final int CALENDAR_ID = Config.calendarNumber; // TODO : cambiar a 1 porque el 3 nos va bien a nosotros específicamente
 
@@ -39,45 +28,9 @@ public class CalendarActivity extends Activity {
             CalendarContract.Events.DTSTART,
             CalendarContract.Events.DTEND
     };
-*/
 
-    private TextView textViewCalendarName;
-    private ListView listViewEventos;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
-
-        //textViewCalendarName = (TextView) findViewById(R.id.textViewCalendarName);
-        listViewEventos = (ListView) findViewById(R.id.listViewEventos);
-
-        consultaCalendars();
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        consultaCalendars();
-    }
-
-    private void consultaCalendars() {
-        ContentResolver cr = getContentResolver();
-        Activity act = this;
-        Context ct = this;
-
-        ArrayList eventos = CalendarService.consultaCalendars(cr,ct,act);
-
-        if(eventos != null){
-            ArrayAdapter arrayAdapter = new ArrayAdapter<String>(ct, android.R.layout.simple_list_item_1, eventos);
-            listViewEventos.setAdapter(arrayAdapter);
-        }
-
-
-
-        /*
+    public static ArrayList consultaCalendars(ContentResolver cr, Context ct, Activity act) {
         Cursor cur = null;
-        ContentResolver cr = getContentResolver();
 
         Uri uri = CalendarContract.Events.CONTENT_URI;
         String selection = "(" + CalendarContract.Events.CALENDAR_ID + "= ?)";
@@ -85,7 +38,7 @@ public class CalendarActivity extends Activity {
         String[] selectionArgs = new String[]{String.valueOf(CALENDAR_ID)};
 
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(ct, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -95,14 +48,14 @@ public class CalendarActivity extends Activity {
             // for ActivityCompat#requestPermissions for more details.
             // Permission is not granted
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+            if (ActivityCompat.shouldShowRequestPermissionRationale(act,
                     Manifest.permission.READ_CALENDAR)) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
             } else {
                 // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
+                ActivityCompat.requestPermissions(act,
                         new String[]{Manifest.permission.READ_CALENDAR},
                         MY_PERMISSIONS_REQUEST_READ_CALENDAR);
 
@@ -125,15 +78,12 @@ public class CalendarActivity extends Activity {
             eventos.add(new String(cur.getString(1)+ "  on " + df.format(start)));
         }
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, eventos);
-        listViewEventos.setAdapter(arrayAdapter);
-        */
+        if(CollectionUtils.isEmpty(eventos)){
+            eventos = null;
+        }
 
-    }
+        return eventos;
 
-    public void clickAddEvent(View view){
-        Intent intent = new Intent(this, AddCalendarEventActivity.class);
-        startActivity(intent);
     }
 
 }

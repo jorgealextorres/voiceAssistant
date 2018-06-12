@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
 
-import java.time.LocalDateTime;
 
 public class LocationActivity extends Activity {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 100;

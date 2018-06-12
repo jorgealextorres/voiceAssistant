@@ -11,22 +11,17 @@ import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+
+import common.Config;
 
 public class AddCalendarEventActivity extends Activity {
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 100;
-    private static final long calId = 3;
+    private static final long calId = Config.calendarNumber;
 
 
     private EditText eventTitle;
